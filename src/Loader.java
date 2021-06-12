@@ -1,21 +1,15 @@
-import java.util.Scanner;
+import person.Person;
+import person.Student;
+import person.Teacher;
 
 public class Loader {
-    // RegExp
-    private static final String REGEXP = "(\\d)(?=(\\d{3})+(?!\\d))";
-    // delimiter
-    private static final String DELIMITER = " ";
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите число:");
+        Person p1 = new Student("Василий Пупкин", 25, 1);
+        Person p2 = new Teacher("Иван Иванович Иванов", 55, "доцент", 85000);
 
-        if (scanner.hasNextInt()) {
-            int number = scanner.nextInt();
-            String output = Integer.toString(number).replaceAll(REGEXP, "$1"+DELIMITER);
-            System.out.println(output);
-        } else {
-            System.out.println("Ошибка, это не число. Перезапустите программу и попробуйте снова!");
-        }
+        Person[] persons = {p1, p2};
+
+        for (Person p: persons)
+            System.out.println(p);
     }
 }
