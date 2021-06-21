@@ -1,3 +1,4 @@
+/*
 package person;
 
 public class Teacher extends Person {
@@ -20,3 +21,4 @@ public class Teacher extends Person {
                 '}';
     }
 }
+*/

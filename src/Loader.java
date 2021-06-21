@@ -1,22 +1,21 @@
 import person.Person;
-import person.Student;
-import person.Teacher;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class Loader {
-    public static void main(String[] args) {
-        Person p1 = new Student("Василий Пупкин", 25, 1);
-        Person p2 = new Teacher("Иван Иванович Иванов", 55, "профессор", 85000);
-        Person p3 = new Teacher("Петр Петрович Петров", 35, "доцент", 55000);
+    public static void main(String[] args) throws ParseException {
+        Person p1 = new Person("Василий Пупкин", "25.03.2001");
+        Person p2 = new Person("Иван Иванович Иванов", "01.08.1965");
+        Person p3 = new Person("Петр Петрович Петров", "25.02.1978");
 
         Person[] persons = {p1, p2, p3};
 
         Arrays.sort(persons, new Comparator<>() {
             @Override
             public int compare(Person p1, Person p2) {
-                return p1.age - p2.age;
+                return p2.getBirthday().compareTo(p1.getBirthday());
             }
         });
 
