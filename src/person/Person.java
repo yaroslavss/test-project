@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private String name;
     private Calendar birthday;
 
@@ -16,8 +16,8 @@ public class Person {
     }
 
     public void setBirthday(String strDate) throws ParseException {
-        DateFormat formatter  = new SimpleDateFormat("dd.MM.yyyy");
-        Date date  = formatter.parse(strDate);
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = formatter.parse(strDate);
         birthday = Calendar.getInstance();
         birthday.setTime(date);
     }
@@ -26,11 +26,14 @@ public class Person {
         return birthday;
     }
 
+    public int getYear() {
+        return birthday.get(Calendar.YEAR);
+    }
+
     public String formatBirthday(String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(birthday.getTime());
     }
-
 
     @Override
     public String toString() {
@@ -38,5 +41,10 @@ public class Person {
                 "name='" + name + '\'' +
                 ", birthday=" + formatBirthday("dd MMMM yyyy") +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Person p) {
+        return getBirthday().compareTo(p.getBirthday());
     }
 }
