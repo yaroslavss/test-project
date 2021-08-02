@@ -1,36 +1,25 @@
-import person.Person;
-
-import java.text.ParseException;
-import java.util.Map;
-import java.util.TreeMap;
-
 public class Loader {
     public static void main(String[] args) {
-        Person p1 = null,
-               p2 = null,
-               p3 = null;
+        ExampleThread t1 = new ExampleThread("t1");
+        ExampleThread t2 = new ExampleThread("t2");
 
-        try {
-            p1 = new Person("Пупкин Василий", "25.03.2001");
-            p2 = new Person("Иванов Иван Иванович", "01.08.1965");
-            p3 = new Person("Петров Петр", "25.02.2002");
-        } catch (ParseException e) {
-            System.out.println("Неправильно задана дата: " + e.getMessage());
-        }
+        t1.start();
+        t1.setPriority(2);
+        t2.start();
+        t2.setPriority(8);
 
-        TreeMap<Person, Integer> personsMap = new TreeMap<>();
+        System.out.println("1-st thread priority: " + t1.getPriority());
+        System.out.println("2-nd thread priority: " + t2.getPriority());
+    }
+}
 
-        personsMap.put(p1, 0);
-        personsMap.put(p2, 0);
-        personsMap.put(p3, 0);
+class ExampleThread extends Thread {
+    public ExampleThread(String name) {
+        super(name);
+    }
 
-        System.out.println(personsMap);
-
-        // use Stream API to find border person
-        Person firstYoungPerson = personsMap.navigableKeySet().stream().filter(person -> person.getYear()>2000).findFirst().get();
-
-        Map<Person, Integer> youngPersonsMap = personsMap.tailMap(firstYoungPerson);
-
-        System.out.println(youngPersonsMap);
+    @Override
+    public void run() {
+        System.out.println("Thread is running... " + Thread.currentThread().getName());
     }
 }
