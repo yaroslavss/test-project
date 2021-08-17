@@ -1,38 +1,28 @@
 package person;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
-public class Person implements Comparable<Person> {
-    private String name;
-    private Calendar birthday;
+public class Person {
+    private final String name;
+    private final LocalDate birthday;
 
-    public Person(String name, String strDate) throws ParseException {
+    public Person(String name, LocalDate birthday) {
         this.name = name;
-        setBirthday(strDate);
+        this.birthday = birthday;
     }
 
-    public void setBirthday(String strDate) throws ParseException {
-        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = formatter.parse(strDate);
-        birthday = Calendar.getInstance();
-        birthday.setTime(date);
+    public String getName() {
+        return name;
     }
 
-    public Calendar getBirthday() {
-        return birthday;
-    }
-
-    public int getYear() {
-        return birthday.get(Calendar.YEAR);
+    public int calculateAge() {
+        return Period.between(birthday, LocalDate.now()).getYears();
     }
 
     public String formatBirthday(String format) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        return dateFormat.format(birthday.getTime());
+        return birthday.format(DateTimeFormatter.ofPattern(format));
     }
 
     @Override
@@ -41,10 +31,5 @@ public class Person implements Comparable<Person> {
                 "name='" + name + '\'' +
                 ", birthday=" + formatBirthday("dd MMMM yyyy") +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Person p) {
-        return getBirthday().compareTo(p.getBirthday());
     }
 }
